@@ -1,4 +1,4 @@
-import {SET_DEFAULT_CITY, SET_SEARCH_CITY} from "../actions/types";
+import {SET_DEFAULT_CITY} from "../actions/types";
 
 const INIT_STATE = {
     defaultCity: [],
