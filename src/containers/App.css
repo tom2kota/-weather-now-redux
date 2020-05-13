@@ -1,0 +1,27 @@
+body {
+    background-color: #DADADA;
+}
+
+body > .grid {
+    height: 100%;
+}
+
+.image {
+    margin-top: -100px;
+}
+
+.column {
+    max-width: 440px;
+}
+
+#weatherBanner {
+    display: none;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    background-color: #f3f7fb;
+}
+
+#searchError {
+    display: none;
+}
