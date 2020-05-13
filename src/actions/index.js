@@ -5,7 +5,7 @@ import openweathermap from '../api/openweathermap';
 export const fetchDefaultCity = () => async dispatch => {
     console.log('fetchDefaultCity()');
 
-    const response = await openweathermap.get('/weather1')
+    const response = await openweathermap.get('/weather')
     dispatch({type: SET_DEFAULT_CITY, payload: response.data})
 }
 
