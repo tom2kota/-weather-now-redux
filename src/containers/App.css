@@ -21,7 +21,3 @@ body > .grid {
     width: 100%;
     background-color: #f3f7fb;
 }
-
-#searchError {
-    display: none;
-}
