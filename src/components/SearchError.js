@@ -1,13 +1,26 @@
-import React from "react";
+import React, {Component} from "react";
 
-const SearchError = () => (
-    <div id="searchError" className="ui segment">
-        <div className="ui center aligned red segment">
-            <i className="info icon"/>
-            <span>Search Error</span>
-            <i className="exclamation icon"/>
+import {connect} from 'react-redux';
+import {fetchDefaultCity, fetchSearchCity} from "../actions";
+
+
+class SearchError extends Component {
+
+    renderError = () => this.props.city.message ? (
+        <div id="searchError" className="ui segment form error">
+            <div className="ui center aligned red segment">
+                <i className="info icon"/>
+                <span>{this.props.city.message}</span>
+            </div>
         </div>
-    </div>
-)
+    ) : ''
 
-export default SearchError
+
+    render() {
+        return <div>{this.renderError()}</div>
+    }
+}
+
+
+const mapStateToProps = state => ({city: state.city})
+export default connect(mapStateToProps, {fetchDefaultCity, fetchSearchCity})(SearchError)
