@@ -5,7 +5,7 @@ import {fetchDefaultCity} from '../actions';
 
 class SearchResult extends Component {
     componentDidMount() {
-        this.props.fetchDefaultCity()
+        // this.props.fetchDefaultCity()
     }
 
     renderCityName = () => this.props.city.id ? this.props.city.name : 'City'
