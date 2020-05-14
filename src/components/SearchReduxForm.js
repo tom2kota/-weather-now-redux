@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Field, reduxForm} from "redux-form";
 
 import {connect} from 'react-redux';
-import {fetchCity} from "../actions";
+import {fetchSearchCity} from "../actions";
 
 class SearchReduxForm extends Component {
 
@@ -14,10 +14,9 @@ class SearchReduxForm extends Component {
                 </div>
             </div>
         }
-
     }
 
-    renderInput = ({input, label, meta}) => {
+    renderInputField = ({input, label, meta}) => {
         const className = `field ${meta.error && meta.touched ? 'error' : ''}`
 
         return (
@@ -25,25 +24,37 @@ class SearchReduxForm extends Component {
                 <div className="ui left icon input">
                     <i className="search location icon"/>
                     <label>{label}</label>
-                    <input {...input} autoComplete="off" placeholder="Enter city"/>
+                    <input {...input}
+                           placeholder="Enter city"
+                           type="search"
+                           name="city"
+                           required="required"
+                           pattern=".{3,40}"
+                           autoComplete="off"
+                           minLength="3"
+                           maxLength="40"
+                           title="Allowed size (min: 3, max: 40 symbols)"
+                    />
                 </div>
                 {this.renderError(meta)}
             </div>
         )
     }
 
-
     onSubmit = (valueInput) => {
-        console.log('onSubmit(valueInput):   ...  ', valueInput);
-        this.props.fetchCity(valueInput)
+        this.props.fetchSearchCity(valueInput.city)
     }
 
     render() {
         return (
             <div className="ui segment">
-                <form className="ui form error" onSubmit={this.props.handleSubmit(this.onSubmit)}>
-                    <Field name="city" component={this.renderInput}/>
-                    <button className="ui fluid large teal submit button"> Search</button>
+                <form className="ui form error"
+                      onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                    <Field name="city"
+                           component={this.renderInputField}/>
+                    <button className="ui fluid large teal submit button">
+                        Search
+                    </button>
                 </form>
             </div>
         )
@@ -53,18 +64,20 @@ class SearchReduxForm extends Component {
 
 const validate = (valueInput) => {
     const errors = {}
-
     if (!valueInput.city) {
         errors.city = 'You must enter a city name'
+    } else if (valueInput.city.length < 3) {
+        errors.city = 'Must be 3 characters or more'
+    } else if (!/^[a-zа-я\s-]{2,40}$/gi.test(valueInput.city)) {
+        errors.city = 'You must enter a correct city name'
     }
-
     return errors
 }
 
 const formWrapped = reduxForm({
-    form: 'SearchForm', validate
+    form: 'syncValidationFormIdentifier', validate
 })(SearchReduxForm)
 
 const mapStateToProps = state => ({inputFormCity: state.inputFormCity})
 
-export default connect(mapStateToProps, {fetchCity})(formWrapped)
+export default connect(mapStateToProps, {fetchSearchCity})(formWrapped)
